@@ -24,4 +24,6 @@ jobs:
           go tool cover -func=coverage.out | awk '/^total:/ { gsub("%","",$3); print $3 > ".coverage-percent"; if ($3+0 < 80) { print "coverage " $3 "% is below 80"; exit 1 } }'
       - name: Publish coverage badge
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.go == '1.26'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: bash .github/publish-coverage-badge.sh "$(cat .coverage-percent)"
