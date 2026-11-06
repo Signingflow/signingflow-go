@@ -1,0 +1,21 @@
+name: SDK Go
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.26", "1.27"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - run: |
+          go test -coverprofile=coverage.out ./...
+          go tool cover -func=coverage.out | awk '/^total:/ { gsub("%","",$3); if ($3+0 < 80) { print "coverage " $3 "% is below 80"; exit 1 } }'
