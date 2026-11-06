@@ -1,6 +1,7 @@
 # signingflow
 
 [![CI](https://github.com/Signingflow/signingflow-go/actions/workflows/ci.yml/badge.svg)](https://github.com/Signingflow/signingflow-go/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Signingflow/signingflow-go/badges/coverage.json)](https://github.com/Signingflow/signingflow-go/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Go SDK for the Signingflow calls used to send a document, read envelope status, and receive webhooks.
