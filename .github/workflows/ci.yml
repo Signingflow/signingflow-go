@@ -24,12 +24,12 @@ jobs:
           go-version: ${{ matrix.go }}
       - run: |
           go test -coverprofile=coverage.out ./...
-          go tool cover -func=coverage.out | awk '/^total:/ { gsub("%","",$3); print $3 > ".coverage-percent"; if ($3+0 < 80) { print "coverage " $3 "% is below 80"; exit 1 } }'
+          go tool cover -func=coverage.out | awk '/^total:/ { gsub("%","",$3); print $3 > "coverage-percent.txt"; if ($3+0 < 80) { print "coverage " $3 "% is below 80"; exit 1 } }'
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.go == '1.26'
         with:
           name: coverage-percent
-          path: .coverage-percent
+          path: coverage-percent.txt
           retention-days: 1
 
   badge:
@@ -46,4 +46,4 @@ jobs:
           name: coverage-percent
       - env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: bash .github/publish-coverage-badge.sh "$(cat .coverage-percent)"
+        run: bash .github/publish-coverage-badge.sh "$(cat coverage-percent.txt)"
